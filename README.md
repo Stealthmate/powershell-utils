@@ -10,7 +10,7 @@
 #### **sshtool** - list and load SSH keys
 Requires the following environment variables to work:
  - `SSH_KEYS` - specifies a path to a directory containing SSH key files
- - `SSH_AGENT` - specifies a path to the SSH agent to use when loading keys. The command used for loading is `& $SSH_AGENT $key`
+ - `SSH_AGENT` - specifies a path to the SSH agent to use when loading keys. The command used for loading is `& $SSH_AGENT $keypath`
 
- - `sshtool -list` - Lists all the keys inside `SSH_KEYS`
+ - `sshtool -view` - Lists all the keys inside `SSH_KEYS`
  - `sshtool -load [array]` - Loads each key in an array of key file names. Absolute paths are supported. Relative paths are resolved with respect to `SSH_KEYS`

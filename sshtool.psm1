@@ -1,7 +1,7 @@
 function sshtool() {
 	param(
 		[Parameter(ParameterSetName="View")]
-		[switch]$list,
+		[switch]$view,
 
 		[Parameter(ParameterSetName="Load", Mandatory)]
 		[string]$load
@@ -9,13 +9,20 @@ function sshtool() {
 
 	switch($PSCmdlet.ParameterSetName) {
 		"View" {
-			$res = gci $env:SSH_KEYS\*.ppk | foreach-object { $_.replace(".ppk","") }
-			write-output $res
-			break
+			if($view) {
+				$res = gci $env:SSH_KEYS\* | select -expand Name
+				write-output $res
+				break
+			}
 		}
 
 		"Load" {
-			$file = gci $env:SSH_KEYS\$load".ppk" -erroraction SilentlyContinue
+
+			$path = $load
+			if(![System.IO.Path]::IsPathRooted($path)) {
+				$path = -join($env:SSH_KEYS, "\$path")
+			}
+			$file = gci $path -erroraction SilentlyContinue
 
 			if($file -eq $null) {
 				write-error "Could not load key: Key does not exist: $load"
