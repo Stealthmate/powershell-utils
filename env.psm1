@@ -23,7 +23,7 @@ function Get-Environment() {
 	[CmdletBinding(DefaultParameterSetName="View")]
 	param(
 		[Parameter(ParameterSetName="View", Position=1)]
-		[array]$vars=@(),
+		[string[]]$vars=@(),
 
 		[Parameter(ParameterSetName="Edit", Mandatory, Position=1)]
 		[hashtable]$update,
@@ -50,6 +50,9 @@ function Get-Environment() {
 					$output[$_] = $vals[$_]
 				}
 			}
+			if($output.count -eq 1) {
+				$output = $output | select -expandproperty Values
+			}
 			write-output $output
 			break
 		}
@@ -62,7 +65,7 @@ function Get-Environment() {
 					if(!$val) {
 						$val = "`$null"
 					}
-					write-information "Value of $_ in $t changed to: $val" -InformationAction Continue
+					write-information "Value of $_ in $t changed to: $val"
 				}
 			}
 		}
