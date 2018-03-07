@@ -14,3 +14,5 @@ Requires the following environment variables to work:
 
  - `sshtool -view` - Lists all the keys inside `SSH_KEYS`
  - `sshtool -load [array]` - Loads each key in an array of key file names. Absolute paths are supported. Relative paths are resolved with respect to `SSH_KEYS`
+
+#### **path** - add/remove values to the `PATH`
