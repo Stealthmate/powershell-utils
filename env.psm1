@@ -19,7 +19,32 @@ function env_parse_targets() {
 	write-output $targets
 }
 
-function Get-Environment() {
+<#
+.SYNOPSIS
+Views/Edits environment variables
+
+.DESCRIPTION
+When used with no arguments, lists all environment variables and their values.
+Passing an array of variable names shows values only for the specified variables.
+When used with the -update argument, sets values for all the listed variables.
+Using -target allows for specifying whether to view/edit Process, User or Machine
+scope variables.
+
+.PARAMETER vars
+An array of variable names to show the values of
+
+.PARAMETER update
+A hash-table of varible:value pairs, which specifies the variables to edit and
+their respective new values. Passing $null as a value is equivalent to deleting
+the variable
+
+.PARAMETER target
+A string, containing the characters 'm', 'u' and/or 'p', which specifies the
+scope where this command operates - Machine, User and Process respectively.
+Passing multiple scopes will result in either viewing the variables from both
+scopes (-vars) or setting variables in both scopes (-update)
+#>
+function env() {
 	[CmdletBinding(DefaultParameterSetName="View")]
 	param(
 		[Parameter(ParameterSetName="View", Position=1)]
@@ -72,6 +97,4 @@ function Get-Environment() {
 	}
 }
 
-set-alias env Get-Environment
-Export-ModuleMember -Function "Get-Environment"
-Export-ModuleMember -Alias "env"
+Export-ModuleMember -Function "env"

@@ -1,3 +1,12 @@
+<#
+.SYNOPSIS
+Modifies delimited array-like strings
+
+.DESCRIPTION
+After converting a string to an array by splitting on a delimiter, appends,
+prepends and/or removes items from the array, and then joins all the items in
+a string using the specified delimiter.
+#>
 function arrstr() {
     [CmdletBinding(DefaultParameterSetName="View")]
     param(
@@ -37,7 +46,7 @@ function arrstr() {
             if($append) {
                 $arr = $arr + $append
             }
-            
+
             $out = new-object System.Collections.ArrayList(,$arr)
 
             $remove | foreach-object {

@@ -1,11 +1,18 @@
+<#
+.SYNOPSIS Shows/Modifies array-like environment variables (PATH, PATHEXT, etc.)
+
+.DESCRIPTION
+When used with only one argument, shows all the items in the array, separated by
+a newline. When used without -commit, outputs a modified array by prepending,
+appending or removing items from it. When used with -commit it does not output
+anything and instead applies changes to the actual environment variable in the
+PROCESS scope.
+#>
 function modevarr() {
     [CmdletBinding(DefaultParameterSetName="View")]
     param(
         [Parameter(Mandatory, Position=1)]
         [string]$var,
-
-        [Parameter(ParameterSetName="View")]
-        [switch]$split,
 
         [Parameter(ParameterSetName="Edit")]
         [string[]]$prepend,
@@ -21,11 +28,7 @@ function modevarr() {
 
     switch($PSCmdlet.ParameterSetName) {
         "View" {
-            if($split) {
-                $value = $value.split(';')
-            }
-
-            write-output $value
+            write-output $value.split(";")
             break
         }
 
