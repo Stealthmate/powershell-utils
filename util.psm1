@@ -1,4 +1,6 @@
-function PSCO-To-Hash() {
+function which { Get-Command $args | Format-Table Path, Name }
+
+function Convert-ObjectToHashTable() {
 	param(
 	[Parameter(Mandatory=$True, ValueFromPipeline=$True)]
 	[PSCustomObject]$obj
@@ -62,3 +64,5 @@ function lnk() {
 		}
 	}
 }
+
+Export-ModuleMember -Function which,Convert-ObjectToHashTable,lnk
